@@ -3,6 +3,7 @@ package com.oauth2.keycloak_connection.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -26,6 +27,8 @@ public class SecurityConfig {
 
                 // Authorization rules
                 .authorizeHttpRequests(auth -> auth
+                                .requestMatchers("/api/admin/**").hasRole("backend_admin")
+                                .requestMatchers("/api/trainee/**").hasRole("backend_trainee")
                         .anyRequest().authenticated()
                 )
 
